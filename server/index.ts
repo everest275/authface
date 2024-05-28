@@ -1,10 +1,11 @@
 import express from 'express'
-import indexRoutes from "../src/router/router.routing"
+import indexRoutes from "../src/router/routes"
 import morgan from 'morgan'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 
 export const app = express();
+
 app.use(morgan('dev'));
 app.use(cookieParser())
 app.use(bodyParser.json());
