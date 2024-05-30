@@ -1,5 +1,5 @@
 import express from 'express'
-import indexRoutes from "../src/router/routes"
+import indexRoutes from "../router/routes"
 import morgan from 'morgan'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'

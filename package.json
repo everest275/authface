@@ -6,8 +6,8 @@
   "type": "commonjs",
   "private": true,
   "scripts": {
-    "start": "node dist/server/index.js",
-    "dev": "ts-node server/index.ts",
+    "start": "node dist/src/server/index.js",
+    "dev": "ts-node src/server/index.ts",
     "build": "tsc"
   },
   "keywords": [],

@@ -1,4 +1,2 @@
-.env
-.env.local
-.env.dev
+env
 node_modules

@@ -1,21 +1,28 @@
-// import PgModel from '../abstract_factory/pool_factory/pool.model'
-import TypeModel from '../abstract_factory/pool_factory/pool_model'
+import Model from '../abstract_factory/pool_factory/pool_builder'
 
-const TypeSchema = TypeModel.Schema({
+const model = new Model()
+const Schema = model.Schema({
 
-    type_name: {
-        type: "VARCHAR(255)"
+    type: {
+        type: "VARCHAR(255)",
+        references: {
+            table: 'types',
+            field: 'id'
+        },
+        nullable: false
     },
-    type_description: {
-        type: "VARCHAR(255)"
+    type_value: {
+        type: "VARCHAR(255)",
+        nullable: false
     },
     state: {
-        type: "VARCHAR(255)"
+        type: "VARCHAR(255)",
+        nullable: false
     }
 },
     {
         times: true
     })
 
-export default TypeModel.ExportModel("Type", TypeSchema, "types")
+export default model.ExportModel("TypeValue", Schema, "type_values")
 

@@ -3,7 +3,7 @@ import Model from './type_model'
 
 export const getAll = async (_req: Request, res: Response) => {
 
-    const result = await Model.find({ state: "1" })
+    const result = await Model.Find({ state: "1" })
     res.json(result)
 }
 
@@ -29,8 +29,12 @@ export const create = async (req: Request, res: Response) => {
 
 export const edit = async (req: Request, res: Response) => {
 
+    const { typeName, typeDescription } = req.body
     const id = req.params.id
-    const savedType = await Model.findByIdAndUpdate(id, req.body)
+    const savedType = await Model.findByIdAndUpdate(id, {
+        type_name:typeName,
+        type_description:typeDescription
+    })
     res.json(savedType)
 
 }

@@ -1,25 +1,12 @@
+import PoolAbstract from "./pool_abstract"
 import Services from './pool_strategy'
-import SqlAdapter from '../../adapters/sql_adapter/script_adapter'
 
-export default abstract class AbstractPool {
 
-    private model: { [key: string]: any }
+
+class PoolBuilder extends PoolAbstract {
 
     constructor() {
-        this.model = [
-            {
-                name: "",
-                key: ""
-            },
-            {
-                _id: "",
-                schema: {},
-                data: {}
-            },
-            {
-                times: false
-            }
-        ]
+        super()
     }
 
     New(newData: { [key: string]: any }) {
@@ -55,6 +42,48 @@ export default abstract class AbstractPool {
         this.setSchema(schema[0].schema)
         return this;
     }
+
+
+
+    async find(findObject?: { [key: string]: any }) {
+        await this.createTables()
+       
+        
+        const service = new Services(this.getModelName())
+        try {
+            let result = await service.getAll()
+            const filter = []
+            if (findObject) {
+                for (const _row of result) {
+                    let result = []
+                    if (findObject[0]) {
+                        result = await this.findOne(findObject[0]);
+                        if (result) {
+                            result = await this.findOne(findObject[0]);
+                        }
+                    }
+                    result = await this.findOne(findObject);
+                    if (result) {
+                        if (findObject[1]) {
+                            result = await this.findOne(findObject[1]);
+                            filter.push(result);
+                        } else {
+                            filter.push(result);
+                        }
+                    }
+                }
+                result = filter[0]
+            }
+            
+            return result
+
+        } catch (error) {
+            console.log(error)
+            return error;
+        }
+
+    }
+    
 
     async findById(id: string) {
         await this.createTables()
@@ -133,107 +162,6 @@ export default abstract class AbstractPool {
         }
     }
 
-    async Find(findObject?: { [key: string]: any }) {
-
-        await this.createTables()
-
-        const service = new Services(this.getModelName())
-        try {
-            let result = await service.getAll()
-            const filter = []
-            if (findObject) {
-                for (const _row of result) {
-                    let result = []
-                    if (findObject[0]) {
-                        result = await this.findOne(findObject[0]);
-                        if (result) {
-                            result = await this.findOne(findObject[0]);
-                        }
-                    }
-                    result = await this.findOne(findObject);
-                    if (result) {
-                        if (findObject[1]) {
-                            result = await this.findOne(findObject[1]);
-                            filter.push(result);
-                        } else {
-                            filter.push(result);
-                        }
-                    }
-                }
-                result = filter[0]
-            }
-
-            return result
-
-        } catch (error) {
-            console.log(error)
-            return this;
-        }
-
-    }
-
-
-
-    //Key
-    setKey(key: string) {
-        return this.model[0].key = key
-    }
-    getKey() {
-        return this.model[0].key
-    }
-
-    //Model
-    getModelName() {
-        return this.model[0].name
-    }
-    setModelName(name: string) {
-        this.model[0].name = name
-    }
-
-    //UUID
-    setUID() {
-        const newRandomId = this.model[1]._id = crypto.randomUUID()
-        return newRandomId
-    }
-
-
-    //Schema
-    setSchema(schema: { [key: string]: any }) {
-        this.model[1].schema = schema
-    }
-    getSchema() {
-        return this.model[1].schema
-    }
-
-    //Data
-    setData(data: { [key: string]: any }) {
-        this.model[1].data = data
-    }
-    getData() {
-        return this.model[1].data
-    }
-
-    //Times
-    setTimes() {
-        if (this.model[2].times) {
-            this.model[1].data.created_at = new Date()
-            this.model[1].data.updated_at = new Date()
-        }
-    }
-
-    async createTables() {
-
-        const service = new Services(this.getModelName())
-
-        try {
-            const tables = await service.getAllTables()
-            const isTableCreated = tables.includes(this.getModelName()) ? false : true
-            isTableCreated ? await service.createTableFromAbstractModel(new SqlAdapter(this.getSchema()).objectToSql(this.getModelName())) : null
-        } catch (error) {
-            console.log(error)
-        }
-    }
 }
 
-
-
+export default PoolBuilder

@@ -3,7 +3,7 @@ import Model from './type_value_model'
 
 export const getAll = async (_req: Request, res: Response) => {
 
-    const result = await Model.find({ state: "1" })
+    const result = await Model.find({state:'1'})
     res.json(result)
 }
 
@@ -16,10 +16,10 @@ export const getOne = async (req: Request, res: Response) => {
 
 export const create = async (req: Request, res: Response) => {
 
-    const { typeName, typeDescription, state } = req.body
+    const { typeId, typeValueDescription, state } = req.body
     const newType = Model.New({
-        type_name: typeName,
-        type_description: typeDescription,
+        type: typeId,
+        type_value: typeValueDescription,
         state: state
     })
     const savedType = await newType.save()
@@ -28,11 +28,13 @@ export const create = async (req: Request, res: Response) => {
 }
 
 export const edit = async (req: Request, res: Response) => {
-
+    const { typeId, typeValue } = req.body
     const id = req.params.id
-    const savedType = await Model.findByIdAndUpdate(id, req.body)
+    const savedType = await Model.findByIdAndUpdate(id, {
+        type: typeId,
+        type_value: typeValue
+    })
     res.json(savedType)
-
 }
 
 export const remove = async (req: Request, res: Response) => {
