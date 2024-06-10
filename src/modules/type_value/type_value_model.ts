@@ -1,7 +1,6 @@
-import Model from '../abstract_factory/pool_factory/pool_builder'
+import Model from '../pool_factory/pool_builder'
 
-const model = new Model()
-const Schema = model.Schema({
+const Schema = new Model({
 
     type: {
         type: "VARCHAR(255)",
@@ -24,5 +23,5 @@ const Schema = model.Schema({
         times: true
     })
 
-export default model.ExportModel("TypeValue", Schema, "type_values")
+export default Schema.exportModel("type_values",Schema)
 

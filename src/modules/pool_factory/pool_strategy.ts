@@ -1,4 +1,4 @@
-import { pool } from '../../../databases/pg';
+import { pool } from '../../databases/pg';
 import { QueryResult } from 'pg';
 
 export default class AuthfaceService {
@@ -10,7 +10,6 @@ export default class AuthfaceService {
 
     //Get all data from table
     public async getAll() {
-
         try {
             const response: QueryResult = await pool.query(`SELECT * FROM ${this.table}`);
             const filter = response.rows
@@ -31,12 +30,12 @@ export default class AuthfaceService {
         }
     }
 
+
     //Post data to table
     public async post(data: { [key: string]: any }) {
         const columns = Object.keys(data).join(', ');
         const values = Object.values(data);
         const placeholders = values.map((_, index) => `$${index + 1}`).join(', ');
-
         try {
             const result = await pool.query(
                 `INSERT INTO ${this.table} (${columns}) VALUES (${placeholders}) RETURNING *`,
@@ -54,7 +53,6 @@ export default class AuthfaceService {
         const columns = Object.keys(data);
         const values = Object.values(data);
         const setClause = columns.map((column, index) => `${column} = $${index + 1}`).join(', ');
-
         try {
             const result = await pool.query(
                 `UPDATE ${this.table} SET ${setClause} WHERE id = $${columns.length + 1} RETURNING *`,
@@ -84,11 +82,9 @@ export default class AuthfaceService {
             const keys = Object.keys(fields);
             const values = Object.values(fields);
             const conditions = keys.map((key, index) => `${key} = $${index + 1}`).join(' AND ');
-
             const query = `SELECT * FROM ${this.table} WHERE ${conditions}`;
             const result: QueryResult = await pool.query(query, values);
             const toArray: any = result.rows.length !== 0 ? result.rows : false;
-
             if (!toArray) {
                 return false;
             }
@@ -113,7 +109,6 @@ export default class AuthfaceService {
     // Crear una nueva tabla en la base de datos a partir de un esquema definido con AbstractModel
     public async createTableFromAbstractModel(createTableQuery: string) {
         try {
-
             // Ejecutar la consulta SQL para crear la tabla
             pool.query(createTableQuery)
                 .then(_res => {

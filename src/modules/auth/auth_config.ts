@@ -1,4 +1,4 @@
-import AppService from '../abstract_factory/pool_factory/pool_strategy'
+import AppService from '../pool_factory/pool_strategy'
 import {validateSchema} from '../../middlewares/validator'
 import {loginSchema, registerSchema} from './auth_schema'
 

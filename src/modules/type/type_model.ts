@@ -1,9 +1,7 @@
 // import PgModel from '../abstract_factory/pool_factory/pool.model'
-import TypeModel from '../abstract_factory/pool_factory/pool_builder'
+import Model from '../pool_factory/pool_builder'
 
-const model = new TypeModel()
-
-const TypeSchema = model.Schema({
+const Schema = new Model({
 
     type_name: {
         type: "VARCHAR(255)",
@@ -22,5 +20,5 @@ const TypeSchema = model.Schema({
         times: true
     })
 
-export default model.ExportModel("Type", TypeSchema, "types")
+export default Schema.exportModel("types",Schema)
 

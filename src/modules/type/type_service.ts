@@ -2,8 +2,7 @@ import { Request, Response } from 'express'
 import Model from './type_model'
 
 export const getAll = async (_req: Request, res: Response) => {
-
-    const result = await Model.Find({ state: "1" })
+    const result = await Model.find({ state: "1" }).populate("type")
     res.json(result)
 }
 
@@ -17,7 +16,7 @@ export const getOne = async (req: Request, res: Response) => {
 export const create = async (req: Request, res: Response) => {
 
     const { typeName, typeDescription, state } = req.body
-    const newType = Model.New({
+    const newType = new Model({
         type_name: typeName,
         type_description: typeDescription,
         state: state
@@ -32,11 +31,10 @@ export const edit = async (req: Request, res: Response) => {
     const { typeName, typeDescription } = req.body
     const id = req.params.id
     const savedType = await Model.findByIdAndUpdate(id, {
-        type_name:typeName,
-        type_description:typeDescription
+        type_name: typeName,
+        type_description: typeDescription
     })
     res.json(savedType)
-
 }
 
 export const remove = async (req: Request, res: Response) => {

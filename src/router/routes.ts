@@ -10,6 +10,6 @@ router.get('/test', (_req, res) => {
     res.send("Testing services...")
 })
 
-router.use(typeRoutes,typeValueRoutes,authRoutes)
+router.use(typeValueRoutes,typeRoutes,authRoutes)
 
 export default router

@@ -2,29 +2,25 @@ import { Request, Response } from 'express'
 import Model from './type_value_model'
 
 export const getAll = async (_req: Request, res: Response) => {
-
-    const result = await Model.find({state:'1'})
+    const result = await Model.find({ state: '1' }).populate("type")
     res.json(result)
 }
 
 export const getOne = async (req: Request, res: Response) => {
-
     const id = req.params.id
     const result = await Model.findById(id)
     res.json(result)
 }
 
 export const create = async (req: Request, res: Response) => {
-
     const { typeId, typeValueDescription, state } = req.body
-    const newType = Model.New({
+    const newType = new Model({
         type: typeId,
         type_value: typeValueDescription,
         state: state
     })
     const savedType = await newType.save()
     res.json(savedType)
-
 }
 
 export const edit = async (req: Request, res: Response) => {
@@ -38,7 +34,6 @@ export const edit = async (req: Request, res: Response) => {
 }
 
 export const remove = async (req: Request, res: Response) => {
-
     const id = req.params.id
     const removedType = await Model.findByIdAndDelete(id)
     res.json(removedType)
