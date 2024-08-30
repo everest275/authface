@@ -1,9 +1,6 @@
 import { Pool } from 'pg'
 
+process.loadEnvFile("env/.env")
 export const pool= new Pool({
-    user:"postgres",
-    host:"localhost",
-    password:"Josuenito01",
-    database:"authface",
-    port:5432
+    connectionString: process.env.PG_URL
 })
