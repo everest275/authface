@@ -8,7 +8,7 @@ import cors from 'cors'
 
 export const app = express();
 
-process.loadEnvFile("env/.env")
+process.loadEnvFile(".env")
 
 app.use(cors({
     origin: process.env.JOBFACE_FORNTEND_ADDRESS,
