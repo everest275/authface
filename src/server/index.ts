@@ -4,11 +4,13 @@ import morgan from 'morgan'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
-
+import { config } from 'dotenv';
+import path from 'path';
 
 export const app = express();
 
-process.loadEnvFile(".env")
+config({ path: path.resolve(__dirname, '../../env/.env') })
+
 
 app.use(cors({
     origin: process.env.JOBFACE_FORNTEND_ADDRESS || "http://localhost:5173",

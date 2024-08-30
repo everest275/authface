@@ -1,6 +1,6 @@
 import { Pool } from 'pg'
-
-process.loadEnvFile(".env")
+import { config } from 'dotenv';
+config()
 export const pool= new Pool({
     connectionString: process.env.PG_URL
 })
