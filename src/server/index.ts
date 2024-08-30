@@ -11,7 +11,7 @@ export const app = express();
 process.loadEnvFile(".env")
 
 app.use(cors({
-    origin: process.env.JOBFACE_FORNTEND_ADDRESS,
+    origin: process.env.JOBFACE_FORNTEND_ADDRESS || "http://localhost:5173",
     credentials: true
 }))
 app.use(morgan('dev'));
