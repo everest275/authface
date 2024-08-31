@@ -6,12 +6,12 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import { config } from 'dotenv';
 import path from 'path';
+import {testDBConnection} from '../databases/pg'
 
 export const app = express();
 
 config({ path: path.resolve(__dirname, '../../env/.env') })
-
-
+testDBConnection()
 app.use(cors({
     origin: process.env.JOBFACE_FORNTEND_ADDRESS || "http://localhost:5173",
     credentials: true
