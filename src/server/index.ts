@@ -14,6 +14,7 @@ export const app = express();
 //     credentials: true
 // }
 const envPath = path.resolve(__dirname, '../../env/.env')
+app.use(express.static(path.join(__dirname, '../../public')));
 config({ path: envPath })
 
 testDBConnection()
@@ -29,7 +30,4 @@ const port = Number(process.env.PORT || "3001")
 app.listen(port, () => {
     console.log(`server on port ${port}`)
 })
-app.get('/type-values', (_req, res) => {
-    res.send('Esta es la ruta /type-values');
-});
 

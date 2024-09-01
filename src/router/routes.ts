@@ -15,12 +15,12 @@ import portfolioAbilitiesRoutes from '../modules/abilitie/portfolios/routes/abil
 import { authRequired } from '../middlewares/validate-token'
 import portfolioReviewsRoutes from '../modules/review/portfolios/routes/review-portfolio-routes'
 import reviewRoutesPublic from '../modules/review/public/review-public-routes'
-
+import path from 'path';
 
 const router = Router();
 
 router.get('/test', (_req, res) => {
-    res.send("Testing services...")
+    res.sendFile(path.join(__dirname, '../../public/test.html'));
 })
 
 //authentication off
