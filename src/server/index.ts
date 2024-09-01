@@ -9,13 +9,13 @@ import path from 'path';
 import {testDBConnection} from '../databases/pg'
 
 export const app = express();
-
+// {
+//     origin: process.env.JOBFACE_FORNTEND_ADDRESS || "http://localhost:5173",
+//     credentials: true
+// }
 config({ path: path.resolve(__dirname, '../../env/.env') })
 testDBConnection()
-app.use(cors({
-    origin: process.env.JOBFACE_FORNTEND_ADDRESS || "http://localhost:5173",
-    credentials: true
-}))
+app.use(cors())
 app.use(morgan('dev'));
 app.use(cookieParser())
 app.use(bodyParser.json({ limit: '100mb' }));
@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: false }))
 
 
 const port=Number(process.env.PORT || "3001")
-app.listen(port,"0.0.0.0", () => {
+app.listen(port, () => {
     console.log(`server on port ${port}`)
 })
 app.use(AuthfaceRoutes)
