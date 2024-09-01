@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "tsx watch src/server/index.ts",
     "start": "node scripts.js start",
-    "build": "node scripts.js build"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "Everest Aguilar Campos",
