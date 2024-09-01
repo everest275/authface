@@ -6,9 +6,9 @@
   "type": "commonjs",
   "private": true,
   "scripts": {
-    "start": "node dist/src/server/index.js",
     "dev": "tsx watch src/server/index.ts",
-    "build": "tsc"
+    "start": "node scripts.js start",
+    "build": "node scripts.js build"
   },
   "keywords": [],
   "author": "Everest Aguilar Campos",
