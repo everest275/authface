@@ -1,13 +1,14 @@
 import { Pool } from 'pg'
-import { config } from 'dotenv';
-config()
+import { loadEnv } from '../config/env'
 
-export const pool= new Pool({
-    user: process.env.DATABASE_USER || 'postgres',
-    host: process.env.DATABASE_HOST || 'localhost',
-    password: process.env.DATABASE_PASSWORD || 'Josuenito01',
-    database: process.env.DATABASE_NAME || 'authface',
-    port: Number(process.env.DATABASE_PORT) || 5432
+loadEnv();
+
+export const pool = new Pool({
+    user: process.env.DATABASE_USER,
+    host: String(process.env.DATABASE_HOST),
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE_NAME,
+    port: Number(process.env.DATABASE_PORT)
 })
 export const testDBConnection = async () => {
     try {
