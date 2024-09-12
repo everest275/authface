@@ -15,6 +15,7 @@ import portfolioAbilitiesRoutes from '../modules/abilitie/portfolios/routes/abil
 import { authRequired } from '../middlewares/validate-token'
 import portfolioReviewsRoutes from '../modules/review/portfolios/routes/review-portfolio-routes'
 import reviewRoutesPublic from '../modules/review/public/review-public-routes'
+import usersRoutes from '../modules/review/users/routes/users-routes'
 import path from 'path';
 
 const router = Router();
@@ -29,7 +30,7 @@ router.use(typeValueRoutes, membershipRoutes, typeRoutes, portfolioRoutesPublic,
     //authentication on
     authRoutes,
     //client
-    authRequired,portfolioAbilitiesRoutes, portfolioProyectRoutes, portfolioReviewsRoutes,portfolioRoutes, proyectPictureRoutes,portfolioPicutreRoutes,)
+    authRequired,portfolioAbilitiesRoutes, portfolioProyectRoutes, portfolioReviewsRoutes,portfolioRoutes, proyectPictureRoutes,portfolioPicutreRoutes,usersRoutes)
 //security
 
 export default router
