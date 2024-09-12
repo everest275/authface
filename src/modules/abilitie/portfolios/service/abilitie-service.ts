@@ -1,8 +1,13 @@
 import { Request, Response } from 'express'
 import Model from '../model/abilitie-model'
+import TypeValueModel from '../../../type-value/type-value-model'
 
 export const getAll = async (req: any, res: Response) => {
     const result = await Model.find({ abilitie_user: req.user.id })
+    res.json(result)
+}
+export const getAblitieTypes = async (_req: any, res: Response) => {
+    const result = await TypeValueModel.find({ type: "01f145eb-8f9a-4389-9c86-138617090b19" })
     res.json(result)
 }
 
@@ -16,7 +21,7 @@ export const getAllByPortfolio = async (req: Request, res: Response) => {
 export const getOne = async (req: Request, res: Response) => {
 
     const id = req.params.id
-    const result = await Model.findById(id)
+    const result = await Model.findById(id)    
     res.json(result)
 }
 
@@ -33,13 +38,12 @@ export const create = async (req: any, res: Response) => {
     })
     const savedData = await newData.save()
     res.json(savedData)
-
 }
 
 export const publicGetAllByPortfolio = async (req: any, res: Response) => {
     const result = await Model.find({
         portfolio: req.params.id
-    })
+    }).populate("abilitie_type")
     res.json(result)
 }
 

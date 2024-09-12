@@ -8,7 +8,7 @@ export const getAll = async (req: any, res: Response) => {
 
 export const publicGetAllByPortoflio = async (req: any, res: Response) => {
     const id = req.params.id
-    const result = await Model.find({ portfolio: id })
+    const result = await Model.find({ portfolio: id }).populate("reviewer_user")
     res.json(result)
 }
 
@@ -35,13 +35,44 @@ export const create = async (req: any, res: Response): Promise<any> => {
     res.json(savedType)
 }
 
-export const edit = async (req: any, res: Response): Promise<any> => {
+export const sended = async (req: any, res: Response): Promise<any> => {
 
-    const { review_user, comment, is_accept, review_state } = req.body
-    if (review_user === req.user.id) return res.status(400).json(["To make a review, user and viewer can't be the same"])
+    const { reviewer_user, portfolio,comment, is_accept, review_state } = req.body
+    if (reviewer_user === req.user.id) return res.status(400).json(["To make a review, user and viewer can't be the same"])
+    const newData = new Model({
+        review_user: req.user.id,
+        reviewer_user: reviewer_user,
+        portfolio: portfolio,
+        comment: comment,
+        is_accept: is_accept,
+        review_state: review_state
+    })
+    const savedType = await newData.save()
+    res.json(savedType)
+}
+
+export const response = async (req: any, res: Response): Promise<any> => {
+
+    const {  reviewer_user,comment, is_accept, review_state } = req.body
+    if (req.user.id === reviewer_user) return res.status(400).json(["To make a review, user and viewer can't be the same"])
     const id = req.params.id
     const savedType = await Model.findByIdAndUpdate(id, {
-        reviewer_user: req.user.id,
+        review_user: req.user.id,
+        reviewer_user: reviewer_user,
+        comment: comment,
+        is_accept: is_accept,
+        review_state: review_state
+    })
+    res.json(savedType)
+}
+
+export const edit = async (req: any, res: Response): Promise<any> => {
+
+    const { review_user, reviewer_user,comment, is_accept, review_state } = req.body
+    if (review_user === reviewer_user) return res.status(400).json(["To make a review, user and viewer can't be the same"])
+    const id = req.params.id
+    const savedType = await Model.findByIdAndUpdate(id, {
+        reviewer_user: reviewer_user,
         review_user: review_user,
         comment: comment,
         is_accept: is_accept,
@@ -49,6 +80,8 @@ export const edit = async (req: any, res: Response): Promise<any> => {
     })
     res.json(savedType)
 }
+
+
 
 export const remove = async (req: Request, res: Response) => {
 
