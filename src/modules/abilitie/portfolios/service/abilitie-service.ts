@@ -38,7 +38,6 @@ export const create = async (req: any, res: Response) => {
     })
     const savedData = await newData.save()
     res.json(savedData)
-
 }
 
 export const publicGetAllByPortfolio = async (req: any, res: Response) => {
