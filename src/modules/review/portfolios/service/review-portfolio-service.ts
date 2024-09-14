@@ -6,6 +6,12 @@ export const getAll = async (req: any, res: Response) => {
     res.json(result)
 }
 
+export const getAllPetitionsReceived = async (req: any, res: Response) => {
+    const result = await Model.find({ reviewer_user: req.user.id }).populate("review_user").populate("portfolio")
+    const filteredResult = result.filter((petition: any) => petition.is_accept === 'e08214cf-8b66-4f5b-bc7b-b70d5542108d');
+    res.json(filteredResult);
+}
+
 export const publicGetAllByPortoflio = async (req: any, res: Response) => {
     const id = req.params.id
     const result = await Model.find({ portfolio: id }).populate("reviewer_user")
@@ -68,12 +74,13 @@ export const response = async (req: any, res: Response): Promise<any> => {
 
 export const edit = async (req: any, res: Response): Promise<any> => {
 
-    const { review_user, reviewer_user,comment, is_accept, review_state } = req.body
+    const { review_user, reviewer_user,portfolio,comment, is_accept, review_state } = req.body
     if (review_user === reviewer_user) return res.status(400).json(["To make a review, user and viewer can't be the same"])
     const id = req.params.id
     const savedType = await Model.findByIdAndUpdate(id, {
         reviewer_user: reviewer_user,
         review_user: review_user,
+        portfolio: portfolio,
         comment: comment,
         is_accept: is_accept,
         review_state: review_state
