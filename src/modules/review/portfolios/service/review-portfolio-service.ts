@@ -2,8 +2,19 @@ import { Request, Response } from 'express'
 import Model from '../model/review-portfolio-model'
 
 export const getAll = async (req: any, res: Response) => {
-    const result = await Model.find({ review_user: req.user.id })
+    const result = await Model.find({ review_user: req.user.id }).populate('portfolio')
     res.json(result)
+}
+export const getCounterReviewsByPortfolio = async (req: any, res: Response) => {
+    const result = await Model.find({ portfolio: req.params.id })
+    const filteredResult = result.filter((petition: any) => petition.is_accept === '0a1a80e2-7b96-48f1-9a01-5300ff27df36');
+    res.json(filteredResult.length);
+}
+
+export const getSuccessReviews = async (req: any, res: Response) => {
+    const result = await Model.find({ portfolio: req.params.id }).populate("reviewer_user")
+    const filteredResult = result.filter((petition: any) => petition.is_accept === '0a1a80e2-7b96-48f1-9a01-5300ff27df36');
+    res.json(filteredResult);
 }
 
 export const getAllPetitionsReceived = async (req: any, res: Response) => {

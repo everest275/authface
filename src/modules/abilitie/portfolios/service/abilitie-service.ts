@@ -18,6 +18,13 @@ export const getAllByPortfolio = async (req: Request, res: Response) => {
     res.json(result)
 }
 
+export const getCounterAbilitiesByPortfolio = async (req: Request, res: Response) => {
+
+    const id = req.params.id
+    const result = await Model.find({portfolio:id})
+    res.json(result.length)
+}
+
 export const getOne = async (req: Request, res: Response) => {
 
     const id = req.params.id

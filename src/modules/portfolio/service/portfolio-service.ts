@@ -9,6 +9,11 @@ export const getAll = async (req: any, res: Response) => {
     res.json(result)
 }
 
+export const getCounter = async (req: any, res: Response) => {
+    const result = await Model.find({ portfolio_user: req.user.id })
+    res.json(result.length)
+}
+
 export const publicGetById = async (req: any, res: Response) => {
     const id = req.params.id
     const result = await Model.findById(id)
